@@ -2951,5 +2951,5 @@ elif menu == "📝 Testler":
             - 🆕 1-6 gün önce eklenen: %20
             - 📅 Bugün eklenen: Dahil değil
             
-            **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!
-            """)
+            "            **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!"
+
