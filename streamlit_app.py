@@ -1145,6 +1145,4 @@ elif menu == "📝 Testler":
             - 📖 30+ gün önce eklenen: %50
             - 📚 7-29 gün önce eklenen: %30  
             - 🆕 1-6 gün önce eklenen: %20
-            - 📅 Bugün eklenen: Dahil değil
-            
-            **
+            - 📅 Bugün eklenen: Dahil değil ** """)
