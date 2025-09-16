@@ -1789,9 +1789,9 @@ elif menu == "🔧 Ayarlar":
 
 # Import time for sleep function
 import time
-            "            **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!
-            """)
-
+          ("""
+**🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!
+""")
 # -------------------- İstatistikler --------------------
 
 elif menu == "📊 İstatistikler":
@@ -2943,7 +2943,7 @@ elif menu == "📝 Testler":
             **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!
             """)
 
-      with col2:
+    with col2:
     st.markdown("""
     **🔄 Genel Tekrar:**
     - 📖 30+ gün önce eklenen: %50
@@ -2953,4 +2953,5 @@ elif menu == "📝 Testler":
 
     **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!
     """)
+
 
