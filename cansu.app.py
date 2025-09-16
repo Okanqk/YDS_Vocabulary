@@ -1699,3 +1699,4 @@ elif menu == "🔧 Ayarlar":
 
 # Import time for sleep function
 import time
+
