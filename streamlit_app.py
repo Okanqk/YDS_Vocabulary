@@ -2943,13 +2943,14 @@ elif menu == "📝 Testler":
             **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!
             """)
 
-        with col2:
-            st.markdown("""
-            **🔄 Genel Tekrar:**
-            - 📖 30+ gün önce eklenen: %50
-            - 📚 7-29 gün önce eklenen: %30  
-            - 🆕 1-6 gün önce eklenen: %20
-            - 📅 Bugün eklenen: Dahil değil
-            
-            "            **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!"
+      with col2:
+    st.markdown("""
+    **🔄 Genel Tekrar:**
+    - 📖 30+ gün önce eklenen: %50
+    - 📚 7-29 gün önce eklenen: %30  
+    - 🆕 1-6 gün önce eklenen: %20
+    - 📅 Bugün eklenen: Dahil değil
+
+    **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!
+    """)
 
