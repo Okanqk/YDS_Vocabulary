@@ -1161,7 +1161,7 @@ elif menu == "📝 Testler":
 
             st.subheader("📋 Günlük Detay Tablosu")
             st.dataframe(daily_df.iloc[::-1])  # Tersten sırala        
-            else:
+    else:
     st.info("📝 Henüz günlük veri yok.")
 
 
