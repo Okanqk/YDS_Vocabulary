@@ -1160,9 +1160,10 @@ elif menu == "📝 Testler":
             st.line_chart(daily_df["puan"])
 
             st.subheader("📋 Günlük Detay Tablosu")
-            st.dataframe(daily_df.iloc[::-1])  # Tersten sırala        
-    else:
+           st.dataframe(daily_df.iloc[::-1])  # Tersten sırala
+else:
     st.info("📝 Henüz günlük veri yok.")
+
 
 
     with tab2:
