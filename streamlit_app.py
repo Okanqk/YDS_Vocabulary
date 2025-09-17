@@ -697,23 +697,23 @@ with st.sidebar:
     st.write(f"📖 **Toplam kelime:** {len(kelimeler)}")
 
     # Test hedefleri
-    st.markdown("### 🎯 Test Hedefleri")
-    en_tr_current = score_data.get("en_tr_answered", 0)
-    tr_en_current = score_data.get("tr_en_answered", 0)
-    tekrar_current = score_data.get("tekrar_answered", 0)
+st.markdown("### 🎯 Test Hedefleri")
+en_tr_current = score_data.get("en_tr_answered", 0)
+tr_en_current = score_data.get("tr_en_answered", 0)
+tekrar_current = score_data.get("tekrar_answered", 0)
 
-    st.write(f"🆕 **EN→TR:** {en_tr_current}/30")
-    st.progress(min(en_tr_current / 30, 1.0))
+st.write(f"🆕 **EN→TR:** {en_tr_current}/30")
+st.progress(min(en_tr_current / 30, 1.0))
 
-    st.write(f"🇹🇷 **TR→EN:** {tr_en_current}/30")
-    st.progress(min(tr_en_current / 30, 1.0))
+st.write(f"🇹🇷 **TR→EN:** {tr_en_current}/30")
+st.progress(min(tr_en_current / 30, 1.0))
 
-    st.write(f"🔄 **Genel Tekrar:** {tekrar_current}/30")
-    st.progress(min(tekrar_current / 30, 1.0))
+st.write(f"🔄 **Genel Tekrar:** {tekrar_current}/30")
+st.progress(min(tekrar_current / 30, 1.0))
 
- if is_daily_test_goal_complete():    st.success("🎉 Tüm test hedefleri tamamlandı!")
-
-# Yanlış kelimeler listesi bilgisi
+if is_daily_test_goal_complete():
+    st.success("🎉 Tüm test hedefleri tamamlandı!")
+    # Yanlış kelimeler listesi bilgisi
 wrong_count = len(score_data.get("wrong_words_list", []))
 if wrong_count > 0:
     st.markdown("### ❌ Yanlış Kelimeler")
