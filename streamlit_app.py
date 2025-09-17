@@ -711,8 +711,7 @@ with st.sidebar:
     st.write(f"🔄 **Genel Tekrar:** {tekrar_current}/30")
     st.progress(min(tekrar_current / 30, 1.0))
 
- if is_daily_test_goal_complete():
-    st.success("🎉 Tüm test hedefleri tamamlandı!")
+ if is_daily_test_goal_complete():    st.success("🎉 Tüm test hedefleri tamamlandı!")
 
 # Yanlış kelimeler listesi bilgisi
 wrong_count = len(score_data.get("wrong_words_list", []))
