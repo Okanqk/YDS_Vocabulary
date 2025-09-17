@@ -1827,7 +1827,8 @@ elif menu == "🔧 Ayarlar":
 
 # Import time for sleep function
 import time
-          ("""
+
+st.write("""
 **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler önce seçilir!
 """)
 # -------------------- İstatistikler --------------------
