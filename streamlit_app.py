@@ -1092,197 +1092,186 @@ elif menu == "📝 Testler":
 
             # Kelime düzenleme bölümü
             with st.expander("✏️ Kelimeyi Düzenle / Sil"):
-                col1, col2 = st.columns(2)
-                with col1:
-                    yeni_en = st.text_input("İngilizce", question_data["soru"]["en"], key="edit_en")
-                    yeni_tr = st.text_input("Türkçe", question_data["soru"]["tr"], key="edit_tr")
+    col1, col2 = st.columns(2)
+    with col1:
+        yeni_en = st.text_input("İngilizce", question_data["soru"]["en"], key="edit_en")
+        yeni_tr = st.text_input("Türkçe", question_data["soru"]["tr"], key="edit_tr")
 
-                with col2:
-                    if st.button("💾 Kaydet", key="save_edit"):
-                        if yeni_en.strip() and yeni_tr.strip():
-                            question_data["soru"]["en"] = yeni_en.strip()
-                            question_data["soru"]["tr"] = yeni_tr.strip()
-                            safe_save_data()
-                            st.success("✅ Kelime güncellendi!")
-                            st.rerun()
-                        else:
-                            st.error("❌ Boş bırakılamaz!")
+    with col2:
+        if st.button("💾 Kaydet", key="save_edit"):
+            if yeni_en.strip() and yeni_tr.strip():
+                question_data["soru"]["en"] = yeni_en.strip()
+                question_data["soru"]["tr"] = yeni_tr.strip()
+                safe_save_data()
+                st.success("✅ Kelime güncellendi!")
+                st.rerun()
+            else:
+                st.error("❌ Boş bırakılamaz!")
 
-                    if st.button("🗑️ Sil", key="delete_word", type="secondary"):
-                        # Kelimeyi yanlış listesinden de çıkar
-                        if question_data["soru"]["en"] in score_data.get("wrong_words_list", []):
-                            score_data["wrong_words_list"].remove(question_data["soru"]["en"])
+        if st.button("🗑️ Sil", key="delete_word", type="secondary"):
+            # Kelimeyi yanlış listesinden de çıkar
+            if question_data["soru"]["en"] in score_data.get("wrong_words_list", []):
+                score_data["wrong_words_list"].remove(question_data["soru"]["en"])
 
-                        kelimeler.remove(question_data["soru"])
-                        safe_save_data()
-                        st.warning("🗑️ Kelime silindi!")
-                        st.session_state.current_question = None
-                        st.session_state.selected_test_type = None
-                        st.rerun()
-    else:
-        # Test seçim bilgilendirmesi
-        st.info("👆 Yukarıdaki butonlardan bir test türü seçin")
+            kelimeler.remove(question_data["soru"])
+            safe_save_data()
+            st.warning("🗑️ Kelime silindi!")
+            st.session_state.current_question = None
+            st.session_state.selected_test_type = None
+            st.rerun()
+else:
+    # Test seçim bilgilendirmesi
+    st.info("👆 Yukarıdaki butonlardan bir test türü seçin")
 
-        # Test istatistikleri açıklaması
-        st.subheader("📊 Yeni Test İstatistikleri (v2.5)")
+    # Test istatistikleri açıklaması
+    st.subheader("📊 Yeni Test İstatistikleri (v2.5)")
 
-        col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-        with col1:
-            st.markdown("""
-            **🆕 EN→TR ve 🇹🇷 TR→EN Testleri:**
-            - 📅 Bugün eklenen kelimeler: %40
-            - 🆕 1-6 gün önce eklenen: %30  
-            - 📚 7-29 gün önce eklenen: %20
-            - 📖 30+ gün önce eklenen: %10
-            
-            **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler öncelikli seçilir!
-            """)
+    with col1:
+        st.markdown("""
+        **🆕 EN→TR ve 🇹🇷 TR→EN Testleri:**
+        - 📅 Bugün eklenen kelimeler: %40
+        - 🆕 1-6 gün önce eklenen: %30  
+        - 📚 7-29 gün önce eklenen: %20
+        - 📖 30+ gün önce eklenen: %10
+        
+        **🎯 v2.5 Yenilik:** Her grup içinde en az test edilmiş kelimeler öncelikli seçilir!
+        """)
 
-        with col2:
-            st.markdown("""
-            **🔄 Genel Tekrar:**
-            - 📖 30+ gün önce eklenen: %50
-            - 📚 7-29 gün önce eklenen: %30  
-            - 🆕 1-6 gün önce eklenen: %20
-            - 📅 Bugün eklenen: Dahil değil ** """)
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("📅 Toplam Gün", len(daily_df))
-                st.metric("📚 Toplam Eklenen Kelime", daily_df["yeni_kelime"].sum())
+    with col2:
+        st.markdown("""
+        **🔄 Genel Tekrar:**
+        - 📖 30+ gün önce eklenen: %50
+        - 📚 7-29 gün önce eklenen: %30  
+        - 🆕 1-6 gün önce eklenen: %20
+        - 📅 Bugün eklenen: Dahil değil ** """)
 
-            with col2:
-                st.metric("💰 Toplam Kazanılan Puan", daily_df["puan"].sum())
-                avg_daily = daily_df["puan"].mean()
-                st.metric("📊 Günlük Ortalama", f"{avg_daily:.1f}")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("📅 Toplam Gün", len(daily_df))
+        st.metric("📚 Toplam Eklenen Kelime", daily_df["yeni_kelime"].sum())
 
-            st.subheader("📈 Günlük Puan Grafiği")
-            st.line_chart(daily_df["puan"])
-            if not daily_df.empty:    st.line_chart(daily_df["puan"])
+    with col2:
+        st.metric("💰 Toplam Kazanılan Puan", daily_df["puan"].sum())
+        avg_daily = daily_df["puan"].mean()
+        st.metric("📊 Günlük Ortalama", f"{avg_daily:.1f}")
+
+    st.subheader("📈 Günlük Puan Grafiği")
+    if not daily_df.empty:
+        st.line_chart(daily_df["puan"])
 
     st.subheader("📋 Günlük Detay Tablosu")
-    st.dataframe(daily_df.iloc[::-1])  # Tersten sırala
-else:
-    st.info("📝 Henüz günlük veri yok.")
+    if not daily_df.empty:
+        st.dataframe(daily_df.iloc[::-1])  # Tersten sırala
+    else:
+        st.info("📝 Henüz günlük veri yok.")
 
-
+# Tab2 ve Tab3 için kodlar
 with tab2:
     st.subheader("📊 Genel İstatistikler")
-    # Buraya genel istatistiklerle ilgili kodlarını ekleyebilirsin
-    st.subheader("📋 Günlük Detay Tablosu")
-    
-    st.dataframe(daily_df.iloc[::-1])  # Tersten sırala
-else:
-    st.info("📝 Henüz günlük veri yok.")
-else:
-    st.info("📝 Henüz günlük veri yok.")
 
+    # Genel metrikler
+    col1, col2, col3, col4 = st.columns(4)
 
+    with col1:
+        st.metric("💰 Genel Puan", score_data["score"])
+        st.metric("📖 Toplam Kelime", len(kelimeler))
 
-    with tab2:
-        st.subheader("📊 Genel İstatistikler")
+    with col2:
+        total_dogru = sum(v.get("dogru", 0) for v in score_data["daily"].values())
+        total_yanlis = sum(v.get("yanlis", 0) for v in score_data["daily"].values())
+        st.metric("✅ Toplam Doğru", total_dogru)
+        st.metric("❌ Toplam Yanlış", total_yanlis)
 
-        # Genel metrikler
-        col1, col2, col3, col4 = st.columns(4)
-
-        with col1:
-            st.metric("💰 Genel Puan", score_data["score"])
-            st.metric("📖 Toplam Kelime", len(kelimeler))
-
-        with col2:
-            total_dogru = sum(v.get("dogru", 0) for v in score_data["daily"].values())
-            total_yanlis = sum(v.get("yanlis", 0) for v in score_data["daily"].values())
-            st.metric("✅ Toplam Doğru", total_dogru)
-            st.metric("❌ Toplam Yanlış", total_yanlis)
-
-        with col3:
-            if total_dogru + total_yanlis > 0:
-                basari_orani = (total_dogru / (total_dogru + total_yanlis)) * 100
-                st.metric("🎯 Genel Başarı", f"{basari_orani:.1f}%")
-            else:
-                st.metric("🎯 Genel Başarı", "0%")
-
-            aktif_gunler = len([d for d in score_data["daily"].values() if d.get("dogru", 0) + d.get("yanlis", 0) > 0])
-            st.metric("📅 Aktif Gün", aktif_gunler)
-
-        with col4:
-            combo = score_data.get("correct_streak", 0)
-            st.metric("🔥 Mevcut Seri", combo)
-
-            wrong_words_count = len(score_data.get("wrong_words_list", []))
-            st.metric("❌ Yanlış Kelime", wrong_words_count)
-
-        # Kelime yaş dağılımı
-        if kelimeler:
-            st.subheader("📅 Kelime Yaş Dağılımı")
-            age_groups = {"Bugün (0 gün)": 0, "Yeni (1-6 gün)": 0, "Orta (7-29 gün)": 0, "Eski (30+ gün)": 0}
-
-            for word in kelimeler:
-                category = get_word_age_category(word)
-                if category == "bugun":
-                    age_groups["Bugün (0 gün)"] += 1
-                elif category == "yeni":
-                    age_groups["Yeni (1-6 gün)"] += 1
-                elif category == "orta":
-                    age_groups["Orta (7-29 gün)"] += 1
-                else:
-                    age_groups["Eski (30+ gün)"] += 1
-
-            age_df = pd.DataFrame(list(age_groups.items()), columns=["Yaş Grubu", "Kelime Sayısı"])
-            st.bar_chart(age_df.set_index("Yaş Grubu"))
-
-        # v2.5: Test sayaçları istatistiği
-        if kelimeler:
-            st.subheader("📊 Kelime Test İstatistikleri (v2.5)")
-            test_counts = [word.get('test_count', 0) for word in kelimeler]
-            if test_counts:
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric("📈 Ortalama Test", f"{sum(test_counts)/len(test_counts):.1f}")
-                with col2:
-                    st.metric("📚 En Çok Test Edilen", max(test_counts))
-                with col3:
-                    never_tested = len([c for c in test_counts if c == 0])
-                    st.metric("⏳ Hiç Test Edilmeyen", never_tested)
-
-    with tab3:
-        st.subheader("❌ Yanlış Kelimeler")
-        wrong_words = get_wrong_words()
-
-        if wrong_words:
-            col1, col2 = st.columns(2)
-            with col1:
-                st.metric("❌ Yanlış Kelime Sayısı", len(wrong_words))
-            with col2:
-                total_wrong_count = sum(k.get("wrong_count", 0) for k in wrong_words)
-                st.metric("🔢 Toplam Yanlış", total_wrong_count)
-
-            st.subheader("📋 Yanlış Kelime Listesi")
-            for i, k in enumerate(wrong_words, 1):
-                col1, col2, col3, col4, col5 = st.columns([1, 3, 3, 2, 2])
-                with col1:
-                    st.write(f"{i}.")
-                with col2:
-                    st.write(f"**{k['en']}**")
-                with col3:
-                    st.write(f"{k['tr']}")
-                with col4:
-                    st.error(f"❌ {k.get('wrong_count', 0)}")
-                with col5:
-                    wrong_test_progress = k.get("wrong_test_count", 0)
-                    if wrong_test_progress > 0:
-                        st.info(f"✅ {wrong_test_progress}/3")
-                    else:
-                        st.warning("🔄 Başlamamış")
-
-            # Yanlış kelime testi butonu
-            if st.button("🔄 Yanlış Kelimeleri Test Et", type="primary"):
-                st.session_state.selected_test_type = "yanlis"
-                st.session_state.current_question = None
-                st.rerun()
-
+    with col3:
+        if total_dogru + total_yanlis > 0:
+            basari_orani = (total_dogru / (total_dogru + total_yanlis)) * 100
+            st.metric("🎯 Genel Başarı", f"{basari_orani:.1f}%")
         else:
-            st.success("🎉 Hiç yanlış kelime yok! Mükemmel performans!")
+            st.metric("🎯 Genel Başarı", "0%")
+
+        aktif_gunler = len([d for d in score_data["daily"].values() if d.get("dogru", 0) + d.get("yanlis", 0) > 0])
+        st.metric("📅 Aktif Gün", aktif_gunler)
+
+    with col4:
+        combo = score_data.get("correct_streak", 0)
+        st.metric("🔥 Mevcut Seri", combo)
+
+        wrong_words_count = len(score_data.get("wrong_words_list", []))
+        st.metric("❌ Yanlış Kelime", wrong_words_count)
+
+    # Kelime yaş dağılımı
+    if kelimeler:
+        st.subheader("📅 Kelime Yaş Dağılımı")
+        age_groups = {"Bugün (0 gün)": 0, "Yeni (1-6 gün)": 0, "Orta (7-29 gün)": 0, "Eski (30+ gün)": 0}
+
+        for word in kelimeler:
+            category = get_word_age_category(word)
+            if category == "bugun":
+                age_groups["Bugün (0 gün)"] += 1
+            elif category == "yeni":
+                age_groups["Yeni (1-6 gün)"] += 1
+            elif category == "orta":
+                age_groups["Orta (7-29 gün)"] += 1
+            else:
+                age_groups["Eski (30+ gün)"] += 1
+
+        age_df = pd.DataFrame(list(age_groups.items()), columns=["Yaş Grubu", "Kelime Sayısı"])
+        st.bar_chart(age_df.set_index("Yaş Grubu"))
+
+    # v2.5: Test sayaçları istatistiği
+    if kelimeler:
+        st.subheader("📊 Kelime Test İstatistikleri (v2.5)")
+        test_counts = [word.get('test_count', 0) for word in kelimeler]
+        if test_counts:
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("📈 Ortalama Test", f"{sum(test_counts)/len(test_counts):.1f}")
+            with col2:
+                st.metric("📚 En Çok Test Edilen", max(test_counts))
+            with col3:
+                never_tested = len([c for c in test_counts if c == 0])
+                st.metric("⏳ Hiç Test Edilmeyen", never_tested)
+
+with tab3:
+    st.subheader("❌ Yanlış Kelimeler")
+    wrong_words = get_wrong_words()
+
+    if wrong_words:
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("❌ Yanlış Kelime Sayısı", len(wrong_words))
+        with col2:
+            total_wrong_count = sum(k.get("wrong_count", 0) for k in wrong_words)
+            st.metric("🔢 Toplam Yanlış", total_wrong_count)
+
+        st.subheader("📋 Yanlış Kelime Listesi")
+        for i, k in enumerate(wrong_words, 1):
+            col1, col2, col3, col4, col5 = st.columns([1, 3, 3, 2, 2])
+            with col1:
+                st.write(f"{i}.")
+            with col2:
+                st.write(f"**{k['en']}**")
+            with col3:
+                st.write(f"{k['tr']}")
+            with col4:
+                st.error(f"❌ {k.get('wrong_count', 0)}")
+            with col5:
+                wrong_test_progress = k.get("wrong_test_count", 0)
+                if wrong_test_progress > 0:
+                    st.info(f"✅ {wrong_test_progress}/3")
+                else:
+                    st.warning("🔄 Başlamamış")
+
+        # Yanlış kelime testi butonu
+        if st.button("🔄 Yanlış Kelimeleri Test Et", type="primary"):
+            st.session_state.selected_test_type = "yanlis"
+            st.session_state.current_question = None
+            st.rerun()
+
+    else:
+        st.success("🎉 Hiç yanlış kelime yok! Mükemmel performans!")
 
 # -------------------- Kelime Ekle --------------------
 
