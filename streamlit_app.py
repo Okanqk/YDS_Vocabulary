@@ -1158,8 +1158,7 @@ elif menu == "📝 Testler":
 
             st.subheader("📈 Günlük Puan Grafiği")
             st.line_chart(daily_df["puan"])
-            if not daily_df.empty:
-    st.line_chart(daily_df["puan"])
+            if not daily_df.empty:    st.line_chart(daily_df["puan"])
 
     st.subheader("📋 Günlük Detay Tablosu")
     st.dataframe(daily_df.iloc[::-1])  # Tersten sırala
