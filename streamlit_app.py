@@ -1166,6 +1166,7 @@ elif menu == "📝 Testler":
 else:
     st.info("📝 Henüz günlük veri yok.")
 
+
 with tab2:
     st.subheader("📊 Genel İstatistikler")
     # Buraya genel istatistiklerle ilgili kodlarını ekleyebilirsin
